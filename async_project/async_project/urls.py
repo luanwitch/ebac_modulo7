@@ -1,8 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
+# async_project/urls.py
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('core.urls')),
+    path("hello/", views.timer_view),  # troquei hello por timer
 ]
-
