@@ -1,0 +1,29 @@
+services:
+  app-web:
+    build: .
+    container_name: app-web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres_db
+    environment:
+      - DJANGO_SETTINGS_MODULE=novo_projeto_django.settings
+      - DATABASE_URL=postgres://postgres:postgres@postgres_db:5432/postgres
+
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
